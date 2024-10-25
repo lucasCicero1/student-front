@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf" style="background-color:#f0f4f3">
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
@@ -15,20 +15,27 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn-dropdown flat color="black" icon="person">
+          <q-list>
+            <q-item clickable v-close-popup @click="handleLogout">
+              <q-item-section>
+                <q-item-label>Logout</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
+      elevated
     >
       <q-list>
         <q-item-label
           header
         >
-          Essential Links
         </q-item-label>
 
         <EssentialLink
@@ -47,50 +54,39 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 import EssentialLink from 'components/EssentialLink.vue';
+import useAuthUser from 'src/composables/UseAuthUser';
+import { useAuthStore } from '../stores/auth-store';
+
+// const linksList = [
+//   {
+//     title: 'Home',
+//     caption: '',
+//     icon: 'mdi-home',
+//     routeName: 'me',
+//   },
+//   {
+//     title: 'Alunos',
+//     caption: '',
+//     icon: 'mdi-school',
+//     routeName: 'products',
+//   },
+// ];
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
+    title: 'Home',
+    caption: '',
     icon: 'code',
-    link: 'https://github.com/quasarframework',
+    link: 'me',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Alunos',
+    caption: '',
+    icon: 'school',
+    link: 'me',
   },
 ];
 
@@ -103,6 +99,24 @@ export default defineComponent({
 
   setup() {
     const leftDrawerOpen = ref(false);
+    const router = useRouter();
+    const { logout } = useAuthUser();
+
+    const $q = useQuasar();
+    const authStore = useAuthStore();
+
+    const handleLogout = async () => {
+      $q.dialog({
+        title: 'Logout',
+        message: 'Do you really want to leave ?',
+        cancel: true,
+        persistent: true,
+      }).onOk(async () => {
+        await logout();
+        authStore.logout();
+        router.replace({ name: 'login' });
+      });
+    };
 
     return {
       essentialLinks: linksList,
@@ -110,6 +124,7 @@ export default defineComponent({
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
+      handleLogout,
     };
   },
 });

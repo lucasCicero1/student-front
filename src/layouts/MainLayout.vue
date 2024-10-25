@@ -15,7 +15,7 @@
           Quasar App
         </q-toolbar-title>
 
-        <q-btn-dropdown flat color="black" icon="person">
+        <q-btn-dropdown flat icon="person">
           <q-list>
             <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section>
@@ -60,33 +60,18 @@ import EssentialLink from 'components/EssentialLink.vue';
 import useAuthUser from 'src/composables/UseAuthUser';
 import { useAuthStore } from '../stores/auth-store';
 
-// const linksList = [
-//   {
-//     title: 'Home',
-//     caption: '',
-//     icon: 'mdi-home',
-//     routeName: 'me',
-//   },
-//   {
-//     title: 'Alunos',
-//     caption: '',
-//     icon: 'mdi-school',
-//     routeName: 'products',
-//   },
-// ];
-
 const linksList = [
   {
     title: 'Home',
     caption: '',
-    icon: 'code',
-    link: 'me',
+    icon: 'home',
+    routeName: 'me',
   },
   {
     title: 'Alunos',
     caption: '',
     icon: 'school',
-    link: 'me',
+    routeName: 'me',
   },
 ];
 

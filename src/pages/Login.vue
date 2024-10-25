@@ -37,21 +37,29 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth-store';
+import useAuthUser from '../composables/UseAuthUser';
 
 export default defineComponent({
   name: 'LoginPage',
 
   setup() {
+    const router = useRouter();
+    const { login } = useAuthUser();
     const form = ref({
-      // email: '',
-      // password: ''
       email: 'teste@mail.com',
       password: '123456',
     });
 
+    const authStore = useAuthStore();
+
     const handleLogin = async () => {
       try {
-        // router.push({ name: 'me' });
+        const { accessToken, username } = await login(form.value);
+        authStore.setToken(accessToken);
+        authStore.setUser(username);
+        router.push({ name: 'me' });
       } catch (error) {
         console.log(error);
       }

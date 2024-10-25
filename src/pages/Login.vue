@@ -30,25 +30,6 @@
             type="submit"
           />
         </div>
-        <div class="full-width q-gutter-y-sm">
-          <q-btn
-            label="Register"
-            color="primary"
-            class="full-width"
-            flat
-            size="sm"
-            to="/signup"
-          />
-
-          <q-btn
-            label="Forgot Password"
-            color="primary"
-            class="full-width"
-            flat
-            size="sm"
-            :to="{ name: 'forgot-password' }"
-          />
-        </div>
       </div>
     </q-form>
   </q-page>

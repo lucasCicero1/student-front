@@ -40,6 +40,7 @@ import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth-store';
 import useAuthUser from '../composables/UseAuthUser';
+import useNotify from '../composables/UseNotify';
 
 export default defineComponent({
   name: 'LoginPage',
@@ -47,6 +48,8 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const { login } = useAuthUser();
+    const { notifyError, notifySuccess } = useNotify();
+
     const form = ref({
       email: 'teste@mail.com',
       password: '123456',
@@ -60,8 +63,9 @@ export default defineComponent({
         authStore.setToken(accessToken);
         authStore.setUser(username);
         router.push({ name: 'me' });
+        notifySuccess('Loggin successfully !');
       } catch (error) {
-        console.log(error);
+        notifyError(error?.message ?? 'UnhandledError');
       }
     };
 

@@ -8,7 +8,12 @@ const user = ref({
 });
 
 export default function useAuthUser() {
-  const login = async ({ email, password }) => ({ accessToken: 'Bearer: some-token', username: 'some-user' });
+  const login = async ({ email, password }) => {
+    const data = { username: 'some-user', accessToken: 'Bearer: some-token' };
+    user.value.username = data.username;
+    user.value.loggedIn = true;
+    return { accessToken: data.accessToken, username: data.username };
+  };
 
   const logout = async () => {
     user.value.loggedIn = false;

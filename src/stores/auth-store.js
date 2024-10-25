@@ -24,5 +24,12 @@ export const useAuthStore = defineStore('auth', {
       window.sessionStorage.setItem('loggedUser', user);
       this.user = user;
     },
+
+    logout() {
+      window.sessionStorage.removeItem('token');
+      window.sessionStorage.removeItem('loggedUser');
+      this.user = null;
+      this.token = null;
+    },
   },
 });

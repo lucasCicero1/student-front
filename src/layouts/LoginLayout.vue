@@ -3,7 +3,6 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Educational Institution Interface
         </q-toolbar-title>
 
       </q-toolbar>

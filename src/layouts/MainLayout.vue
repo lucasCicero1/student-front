@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" style="background-color:#f0f4f3">
+  <q-layout view="lHh Lpr lFf" class="bg-blue-grey-1">
     <q-header>
       <q-toolbar>
         <q-btn
@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Educational Institution Interface
         </q-toolbar-title>
 
         <q-btn-dropdown flat icon="person">
@@ -32,7 +32,7 @@
       show-if-above
       elevated
     >
-      <q-list>
+      <q-list bordered separator>
         <q-item-label
           header
         >
@@ -71,7 +71,7 @@ const linksList = [
     title: 'Alunos',
     caption: '',
     icon: 'school',
-    routeName: 'me',
+    routeName: 'students',
   },
 ];
 

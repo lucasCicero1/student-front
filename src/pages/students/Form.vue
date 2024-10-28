@@ -37,6 +37,14 @@
                 maxlength="11"
                 lazy-rules
                 :rules="[val => (val && val.length === 11) || 'Invalid CPF !']"
+                :disable="state.isUpdate"
+              />
+            </div>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" v-if="state.isUpdate">
+              <q-input
+                label="RA"
+                v-model="formState.ra"
+                :disable="true"
               />
             </div>
           </div>
@@ -97,6 +105,7 @@ export default defineComponent({
       name: '',
       email: '',
       cpf: '',
+      ra: '',
     });
 
     const state = reactive({
@@ -114,6 +123,7 @@ export default defineComponent({
         formState.name = studentValue.value.name;
         formState.email = studentValue.value.email;
         formState.cpf = studentValue.value.cpf;
+        formState.ra = studentValue.value.ra;
         state.isUpdate = true;
       },
       { deep: true },

@@ -12,7 +12,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
-      { path: 'students', name: 'students', component: () => import('src/pages/students/Students.vue') },
+      { path: 'students', name: 'students', component: () => import('src/pages/students/Index.vue') },
     ],
     meta: {
       requiresAuth: true,

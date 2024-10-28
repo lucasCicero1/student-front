@@ -17,7 +17,7 @@
             label="Cadastrar Aluno"
             color="primary"
             icon="mdi-plus"
-            :to="{ name: 'form-students' }"
+            @click.prevent="onAdd"
           />
         </template>
         <template v-slot:body-cell-actions="props">
@@ -54,7 +54,7 @@
         fab
         icon="mdi-plus"
         color="primary"
-        :to="{ name: 'form-students' }"
+        @click.prevent="onAdd"
       />
     </q-page-sticky>
   </q-page>
@@ -86,7 +86,7 @@ const columns = [
 export default defineComponent({
   name: 'StudentsPage',
 
-  setup() {
+  setup(props, { emit }) {
     const retrieveRoutePath = 'list/students';
     const students = ref([]);
     const loading = ref(true);
@@ -107,9 +107,13 @@ export default defineComponent({
 
     onMounted(() => listStudents());
 
-    const handleEdit = () => {};
+    const handleEdit = (student) => emit('on-edit', student);
 
     const handleRemove = () => {};
+
+    const onAdd = () => {
+      emit('on-add');
+    };
 
     return {
       columns,
@@ -117,6 +121,7 @@ export default defineComponent({
       loading,
       handleEdit,
       handleRemove,
+      onAdd,
     };
   },
 });

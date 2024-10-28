@@ -9,6 +9,17 @@
         class="col-12"
         :loading="loading"
       >
+        <template v-slot:top>
+          <span class="text-h6">Alunos</span>
+          <q-space />
+          <q-btn
+            v-if="$q.platform.is.desktop"
+            label="Cadastrar Aluno"
+            color="primary"
+            icon="mdi-plus"
+            :to="{ name: 'form-students' }"
+          />
+        </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-x-sm">
             <q-btn
@@ -37,6 +48,15 @@
         </template>
       </q-table>
     </div>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn
+        v-if="$q.platform.is.mobile"
+        fab
+        icon="mdi-plus"
+        color="primary"
+        :to="{ name: 'form-students' }"
+      />
+    </q-page-sticky>
   </q-page>
 </template>
 

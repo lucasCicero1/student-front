@@ -9,6 +9,32 @@
         class="col-12"
         :loading="loading"
       >
+        <template v-slot:body-cell-actions="props">
+          <q-td :props="props" class="q-gutter-x-sm">
+            <q-btn
+              icon="mdi-pencil-outline"
+              color="info"
+              dense
+              size="sm"
+              @click="handleEdit(props.row)"
+            >
+              <q-tooltip>
+                Editar
+              </q-tooltip>
+            </q-btn>
+            <q-btn
+              icon="mdi-delete-outline"
+              color="negative"
+              dense
+              size="sm"
+              @click="handleRemove(props.row)"
+            >
+              <q-tooltip>
+                Deletar
+              </q-tooltip>
+            </q-btn>
+          </q-td>
+        </template>
       </q-table>
     </div>
   </q-page>
@@ -31,6 +57,9 @@ const columns = [
   },
   {
     name: 'cpf', align: 'left', label: 'CPF', field: 'cpf', sortable: true,
+  },
+  {
+    name: 'actions', align: 'right', label: 'Actions', field: 'actions', sortable: true,
   },
 ];
 
@@ -58,10 +87,16 @@ export default defineComponent({
 
     onMounted(() => listStudents());
 
+    const handleEdit = () => {};
+
+    const handleRemove = () => {};
+
     return {
       columns,
       students,
       loading,
+      handleEdit,
+      handleRemove,
     };
   },
 });

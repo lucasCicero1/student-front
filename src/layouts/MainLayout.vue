@@ -68,7 +68,7 @@ const linksList = [
     routeName: 'me',
   },
   {
-    title: 'Alunos',
+    title: 'Students',
     caption: '',
     icon: 'school',
     routeName: 'students',

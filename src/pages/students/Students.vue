@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="row">
       <q-table
-        title="Alunos"
+        title="Students"
         :rows="state.students"
         :columns="columns"
         row-key="cpf"
@@ -10,11 +10,11 @@
         :loading="state.loading"
       >
         <template v-slot:top>
-          <span class="text-h6">Alunos</span>
+          <span class="text-h6">Students</span>
           <q-space />
           <q-btn
             v-if="$q.platform.is.desktop"
-            label="Cadastrar Aluno"
+            label="Register Student"
             color="primary"
             icon="mdi-plus"
             @click.prevent="onAdd"
@@ -70,7 +70,7 @@ const columns = [
     name: 'ra', align: 'left', label: 'RA', field: 'ra', sortable: true,
   },
   {
-    name: 'name', align: 'left', label: 'Nome', field: 'name', sortable: true,
+    name: 'name', align: 'left', label: 'Name', field: 'name', sortable: true,
   },
   {
     name: 'email', align: 'left', label: 'E-mail', field: 'email', sortable: true,
@@ -79,7 +79,7 @@ const columns = [
     name: 'cpf', align: 'left', label: 'CPF', field: 'cpf', sortable: true,
   },
   {
-    name: 'actions', align: 'right', label: 'Actions', field: 'actions', sortable: true,
+    name: 'actions', align: 'right', label: '', field: 'actions', sortable: true,
   },
 ];
 

@@ -3,11 +3,11 @@
     <div class="row">
       <q-table
         title="Alunos"
-        :rows="students"
+        :rows="state.students"
         :columns="columns"
         row-key="cpf"
         class="col-12"
-        :loading="loading"
+        :loading="state.loading"
       >
         <template v-slot:top>
           <span class="text-h6">Alunos</span>
@@ -61,9 +61,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue';
-import UseNotify from 'src/composables/UseNotify';
-import useApi from 'src/composables/UseApi';
+import {
+  defineComponent, computed, watch, reactive,
+} from 'vue';
 
 const columns = [
   {
@@ -85,27 +85,42 @@ const columns = [
 
 export default defineComponent({
   name: 'StudentsPage',
+  props: {
+    students: {
+      required: true,
+      type: Array,
+    },
+    loading: {
+      required: true,
+      type: Boolean,
+      default: false,
+    },
+  },
 
   setup(props, { emit }) {
-    const retrieveRoutePath = 'list/students';
-    const students = ref([]);
-    const loading = ref(true);
-    const { list } = useApi();
-    const { notifyError } = UseNotify();
+    const state = reactive({
+      students: [],
+      loading: true,
+    });
 
-    const listStudents = async () => {
-      loading.value = true;
-      try {
-        const { data } = await list(retrieveRoutePath);
-        if (data.length) students.value = data;
-      } catch (error) {
-        notifyError(error.message);
-      } finally {
-        loading.value = false;
-      }
-    };
+    const studentsProps = computed(() => props.students);
+    const loadingProps = computed(() => props.loading);
 
-    onMounted(() => listStudents());
+    watch(
+      () => studentsProps,
+      (studentValue) => {
+        state.students = studentValue.value;
+      },
+      { deep: true },
+    );
+
+    watch(
+      () => loadingProps,
+      (loadingValue) => {
+        state.loading = loadingValue.value;
+      },
+      { deep: true },
+    );
 
     const handleEdit = (student) => emit('on-edit', student);
 
@@ -117,11 +132,10 @@ export default defineComponent({
 
     return {
       columns,
-      students,
-      loading,
       handleEdit,
       handleRemove,
       onAdd,
+      state,
     };
   },
 });

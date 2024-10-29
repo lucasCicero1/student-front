@@ -15,7 +15,7 @@
           Educational Institution Interface
         </q-toolbar-title>
 
-        <q-btn-dropdown flat icon="person">
+        <q-btn-dropdown flat icon="person" no-caps split :label="user">
           <q-list>
             <q-item clickable v-close-popup @click="handleLogout">
               <q-item-section>
@@ -56,8 +56,8 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
+import { storeToRefs } from 'pinia';
 import EssentialLink from 'components/EssentialLink.vue';
-import useAuthUser from 'src/composables/UseAuthUser';
 import { useAuthStore } from '../stores/auth-store';
 
 const linksList = [
@@ -85,10 +85,10 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const router = useRouter();
-    const { logout } = useAuthUser();
-
     const $q = useQuasar();
     const authStore = useAuthStore();
+    const { getUser } = storeToRefs(authStore);
+    const user = getUser.value;
 
     const handleLogout = async () => {
       $q.dialog({
@@ -97,7 +97,6 @@ export default defineComponent({
         cancel: true,
         persistent: true,
       }).onOk(async () => {
-        await logout();
         authStore.logout();
         router.replace({ name: 'login' });
       });
@@ -110,6 +109,7 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
       handleLogout,
+      user,
     };
   },
 });

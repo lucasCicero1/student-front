@@ -10,14 +10,14 @@
           v-model="form.email"
           type="email"
           lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Email is required!']"
+          :rules="[val => (val && /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(val)) || 'Invalid email !']"
         />
         <q-input
           label="Password"
           v-model="form.password"
           lazy-rules
-          :rules="[val => (val && val.length >= 2) ||
-            'Password is required and with 6 characteres !']"
+          :rules="[val => (val && val.length >= 5) ||
+            'Password is required and with 5 characteres !']"
         />
         <div class="full-width q-pt-md">
           <q-btn
@@ -28,6 +28,7 @@
             rounded
             size="lg"
             type="submit"
+            :disable="!validate(form)"
           />
         </div>
       </div>
@@ -51,8 +52,8 @@ export default defineComponent({
     const { notifyError, notifySuccess } = useNotify();
 
     const form = ref({
-      email: 'teste@mail.com',
-      password: '123456',
+      email: 'admin@mail.com',
+      password: 'admin',
     });
 
     const authStore = useAuthStore();
@@ -69,9 +70,12 @@ export default defineComponent({
       }
     };
 
+    const validate = (data) => (/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(data.email) && data.password.length >= 5);
+
     return {
       form,
       handleLogin,
+      validate,
     };
   },
 });

@@ -8,6 +8,7 @@
             @on-edit="onEdit"
             :students="state.students"
             :loading="state.loading"
+            @on-remove="onRemove"
           />
         </div>
       </div>
@@ -28,6 +29,7 @@
 import {
   defineComponent, reactive, onMounted,
 } from 'vue';
+import { useQuasar } from 'quasar';
 import useApi from 'src/composables/UseApi';
 import useNotify from 'src/composables/UseNotify';
 import Students from './Students.vue';
@@ -40,8 +42,9 @@ export default defineComponent({
     FormStudent,
   },
   setup() {
-    const { list } = useApi();
-    const { notifyError } = useNotify();
+    const { list, remove } = useApi();
+    const { notifyError, notifySuccess } = useNotify();
+    const $q = useQuasar();
 
     const state = reactive({
       showModal: false,
@@ -87,12 +90,37 @@ export default defineComponent({
       state.student = {};
     };
 
+    const handleRemove = async (student) => {
+      try {
+        $q.dialog({
+          title: 'Confirm',
+          message: `<span>Do you really want to delete student <strong>${student.name}</strong> ?</span>`,
+          html: true,
+          cancel: {
+            color: 'negative',
+          },
+          persistent: true,
+        }).onOk(async () => {
+          await remove({ path: 'delete/student', payload: student });
+          notifySuccess(`Student ${student.name} was deleted successfully.`);
+          await listStudents();
+        });
+      } catch (error) {
+        notifyError(error.message);
+      }
+    };
+
+    const onRemove = async (student) => {
+      await handleRemove(student);
+    };
+
     return {
       onAdd,
       state,
       onEdit,
       onSubmit,
       onReset,
+      onRemove,
     };
   },
 });

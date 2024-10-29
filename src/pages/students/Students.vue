@@ -124,7 +124,7 @@ export default defineComponent({
 
     const handleEdit = (student) => emit('on-edit', student);
 
-    const handleRemove = () => {};
+    const handleRemove = (student) => emit('on-remove', student);
 
     const onAdd = () => {
       emit('on-add');

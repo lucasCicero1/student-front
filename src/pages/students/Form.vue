@@ -98,7 +98,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const { create } = useApi();
+    const { create, update } = useApi();
     const { notifyError, notifySuccess } = useNotify();
 
     const formState = reactive({
@@ -132,11 +132,13 @@ export default defineComponent({
     const onSubmit = async () => {
       state.loading = true;
       try {
-        const { data } = await create({ path: 'create/student', payload: formState });
+        const { data } = state.isUpdate
+          ? await update({ path: 'update/student', payload: formState })
+          : await create({ path: 'create/student', payload: formState });
         notifySuccess(data.message);
         emit('on-submit');
       } catch (error) {
-        notifyError(error.message);
+        notifyError(error.data.error || `Unable to save Student: ${formState.name}`);
       } finally {
         state.loading = false;
       }

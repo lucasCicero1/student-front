@@ -95,6 +95,10 @@ export default defineComponent({
     student: {
       type: Object,
     },
+    isUpdate: {
+      required: true,
+      type: Boolean,
+    },
   },
 
   setup(props, { emit }) {
@@ -116,6 +120,7 @@ export default defineComponent({
     const validate = (form) => (form.name && /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(form.email) && form.cpf.length === 11);
     const propsShowModal = computed(() => props.showModal);
     const propsStudent = computed(() => props.student);
+    const propsIsUpdate = computed(() => props.isUpdate);
 
     watch(
       () => propsStudent,
@@ -124,7 +129,14 @@ export default defineComponent({
         formState.email = studentValue.value.email;
         formState.cpf = studentValue.value.cpf;
         formState.ra = studentValue.value.ra;
-        state.isUpdate = true;
+      },
+      { deep: true },
+    );
+
+    watch(
+      () => propsIsUpdate,
+      (isUpdateValue) => {
+        state.isUpdate = isUpdateValue.value;
       },
       { deep: true },
     );
@@ -132,10 +144,10 @@ export default defineComponent({
     const onSubmit = async () => {
       state.loading = true;
       try {
-        const { data } = state.isUpdate
+        state.isUpdate
           ? await update({ path: 'update/student', payload: formState })
           : await create({ path: 'create/student', payload: formState });
-        notifySuccess(data.message);
+        notifySuccess(`Student was ${state.isUpdate ? 'updated' : 'created'} successfully.`);
         emit('on-submit');
       } catch (error) {
         notifyError(error.data.error || `Unable to save Student: ${formState.name}`);
@@ -144,7 +156,9 @@ export default defineComponent({
       }
     };
 
-    const onReset = () => emit('on-reset');
+    const onReset = () => {
+      emit('on-reset');
+    };
 
     return {
       formState,

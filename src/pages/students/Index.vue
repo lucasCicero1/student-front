@@ -16,8 +16,9 @@
     <form-student
       :showModal="state.showModal"
       @on-submit="onSubmit"
-      @on-reset="state.showModal = false"
+      @on-reset="onReset"
       :student="state.student"
+      :isUpdate="state.isUpdate"
     >
     </form-student>
   </q-page>
@@ -47,15 +48,23 @@ export default defineComponent({
       student: {},
       students: [],
       loading: true,
+      isUpdate: false,
     });
 
     const onAdd = () => {
       state.showModal = !state.showModal;
+      state.isUpdate = false;
     };
 
     const onEdit = (student) => {
       state.student = student;
       state.showModal = !state.showModal;
+      state.isUpdate = true;
+    };
+
+    const onReset = () => {
+      state.showModal = !state.showModal;
+      state.student = {};
     };
 
     const listStudents = async () => {
@@ -75,6 +84,7 @@ export default defineComponent({
     const onSubmit = () => {
       state.showModal = !state.showModal;
       listStudents();
+      state.student = {};
     };
 
     return {
@@ -82,6 +92,7 @@ export default defineComponent({
       state,
       onEdit,
       onSubmit,
+      onReset,
     };
   },
 });

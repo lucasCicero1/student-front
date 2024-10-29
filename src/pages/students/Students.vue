@@ -108,8 +108,8 @@ export default defineComponent({
 
     watch(
       () => studentsProps,
-      (studentValue) => {
-        state.students = studentValue.value;
+      (studentsValue) => {
+        state.students = studentsValue.value;
       },
       { deep: true },
     );

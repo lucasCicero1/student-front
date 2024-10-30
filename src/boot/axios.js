@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
 import interceptor from '../interceptor';
+import configs from '../configs';
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -8,7 +9,7 @@ import interceptor from '../interceptor';
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'http://localhost:3000/v1/' });
+const api = axios.create({ baseURL: configs.API_URL });
 
 export default boot(({ app }) => {
   interceptor(api);

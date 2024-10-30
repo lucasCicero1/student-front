@@ -2,7 +2,7 @@ const type = import.meta.env.MODE;
 
 const configs = {
   production: {
-    API_URL: process.env.API_URL,
+    API_URL: 'https://student-hub-api.onrender.com/v1/',
   },
   development: {
     API_URL: 'http://localhost:3000/v1/',

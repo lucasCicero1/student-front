@@ -8,9 +8,15 @@
         row-key="cpf"
         class="col-12"
         :loading="state.loading"
+        :filter-method="filterStudents"
+        :filter="filter"
       >
         <template v-slot:top>
-          <span class="text-h6">Students</span>
+          <q-input filled dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
           <q-space />
           <q-btn
             v-if="$q.platform.is.desktop"
@@ -62,7 +68,7 @@
 
 <script>
 import {
-  defineComponent, computed, watch, reactive,
+  defineComponent, computed, watch, reactive, ref,
 } from 'vue';
 
 const columns = [
@@ -130,12 +136,26 @@ export default defineComponent({
       emit('on-add');
     };
 
+    const filter = ref('');
+
+    const filterStudents = (array, fts) => {
+      const ftsLowerCase = fts.toLowerCase();
+      const regex = new RegExp(`${ftsLowerCase}`, 'gi');
+      const filtered = array.filter((student) => student.ra.toString().match(regex)
+        || student.name.toString().match(regex)
+        || student.email.toString().match(regex)
+        || student.cpf.toString().match(regex));
+      return filtered;
+    };
+
     return {
       columns,
       handleEdit,
       handleRemove,
       onAdd,
       state,
+      filter,
+      filterStudents,
     };
   },
 });

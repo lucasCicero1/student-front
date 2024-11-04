@@ -30,10 +30,11 @@
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-x-sm">
             <q-btn
-              icon="mdi-pencil-outline"
-              color="info"
               dense
-              size="sm"
+              flat
+              color="primary"
+              field="edit"
+              icon="edit"
               @click="handleEdit(props.row)"
             >
               <q-tooltip>
@@ -41,10 +42,11 @@
               </q-tooltip>
             </q-btn>
             <q-btn
-              icon="mdi-delete-outline"
-              color="negative"
               dense
-              size="sm"
+              flat
+              color="negative"
+              field="edit"
+              icon="delete"
               @click="handleRemove(props.row)"
             >
               <q-tooltip>

@@ -10,6 +10,7 @@
         :loading="state.loading"
         :filter-method="filterStudents"
         :filter="filter"
+        :grid="$q.screen.lt.md"
       >
         <template v-slot:top>
           <q-input filled dense debounce="300" v-model="filter" placeholder="Search">
@@ -52,6 +53,47 @@
             </q-btn>
           </q-td>
         </template>
+
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <q-card>
+              <q-list dense>
+                <q-item v-for="col in props.cols" :key="col.name">
+                  <q-item-section>
+                    <q-item-label caption>
+                      {{ col.label }}
+                    </q-item-label>
+                  </q-item-section>
+
+                  <q-item-section side>
+                    <div v-if="col.name === 'actions'">
+                      <q-btn
+                        dense
+                        flat
+                        color="primary"
+                        field="edit"
+                        icon="edit"
+                        @click="handleEdit(props.row)">
+                      </q-btn>
+                      <q-btn
+                        dense
+                        flat
+                        color="negative"
+                        field="edit"
+                        icon="delete"
+                        @click="handleRemove(props.row)">
+                      </q-btn>
+                    </div>
+
+                    <q-item-label v-else>
+                      {{ col.value }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-card>
+          </div>
+        </template>
       </q-table>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -85,7 +127,7 @@ const columns = [
     name: 'cpf', align: 'left', label: 'CPF', field: 'cpf', sortable: true,
   },
   {
-    name: 'actions', align: 'right', label: '', field: 'actions', sortable: true,
+    name: 'actions', align: 'right', label: 'Actions', field: 'actions', sortable: true,
   },
 ];
 

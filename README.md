@@ -1,35 +1,38 @@
-# Quasar App (students-front)
+## 🎯 About
 
-Educational institution interface
+An educational platform app created to manipulate students of an educational institution.
 
-## Install the dependencies
+Link: https://student-front-8awv.onrender.com/
+
+![screen](https://user-images.githubusercontent.com/32497719/185219520-057cf8f4-c470-4427-8de3-aef8a2ea8f4c.png)
+
+
+## 🚀 Technologies
+
+- Vue3
+- Quasar
+- Axios
+- Pinia
+- Eslint
+
+## 📑 Features
+
+- \[x] Register Student
+- \[x] Search Students
+- \[x] Update Student
+- \[x] Delete Student
+- \[ ] Auth - Register
+- \[ ] Auth - Login
+
+### ✅ Requirements:
+>node: 18.x
+
+### Running the app
+
+- git clone https://github.com/lucasCicero1/student-front.git
+
 ```bash
-yarn
-# or
-npm install
+$ cd student-front
+$ npm install
+$ npm run dev
 ```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
-
-teste

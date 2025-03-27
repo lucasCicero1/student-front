@@ -4,7 +4,7 @@ An educational platform app created to manipulate students of an educational ins
 
 Link: https://student-front-8awv.onrender.com/
 
-![screen](https://user-images.githubusercontent.com/32497719/185219520-057cf8f4-c470-4427-8de3-aef8a2ea8f4c.png)
+![student-front](https://github.com/user-attachments/assets/4e1ceb15-5fb3-4aa8-8d6c-b5c433759437)
 
 
 ## 🚀 Technologies

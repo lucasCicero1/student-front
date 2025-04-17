@@ -101,7 +101,7 @@ export default defineComponent({
           },
           persistent: true,
         }).onOk(async () => {
-          await remove({ path: 'delete/student', payload: student });
+          await remove({ path: 'delete/student', cpf: student.cpf });
           notifySuccess(`Student ${student.name} was deleted successfully.`);
           await listStudents();
         });

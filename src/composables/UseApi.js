@@ -5,7 +5,7 @@ export default function useApi() {
   const create = async ({ path, payload }) => http.post(path, payload);
   const getById = async ({ path, id }) => http.get(`${path}?${id}`);
   const update = async ({ path, payload }) => http.patch(path, payload);
-  const remove = async ({ path, payload }) => http.delete(path, { data: payload });
+  const remove = async ({ path, cpf }) => http.delete(`${path}?cpf=${cpf}`);
 
   return {
     list,
